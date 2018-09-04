@@ -164,8 +164,8 @@ public class CallBackController {
 					wxUserService.updateByPrimaryKeyId(wx_user);
 					session.setAttribute("userinfo", wxUserService.getOne(wx_user.getId()));
 				}else {
-					int t_id = wxUserService.insert(userinfo);
-					session.setAttribute("userinfo", wxUserService.getOne(t_id));
+					wxUserService.insert(userinfo);
+					session.setAttribute("userinfo", wxUserService.getOne(userinfo.getId()));
 				}
 				/*
 				 * 更新session中的用户微信注册信息
@@ -232,21 +232,14 @@ public class CallBackController {
 		boolean IsOK = false;
 		Wx_user wx_user = (Wx_user) request.getSession().getAttribute("userinfo");
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");
 		response.setContentType("text/plain");// 等同于response.setHeader("Content-Type", "image/jpeg");
 		// 9.设置响应头控制浏览器不要缓存
 		response.setDateHeader("expries", -1);
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
 		Map paraMap = new HashMap<String, String>();
-		if(wx_user!=null&&wx_user.getOpenid()!=null) {
-			paraMap.put("openid", wx_user.getOpenid());
-		}
 		if (StringUtils.isNotBlank(email)) {
 			paraMap.put("email", email);
-		}
-		if (StringUtils.isNotBlank(password)) {
-			paraMap.put("password", password);
 		}
 		List<Wx_user> wx_users = wxUserService.pageListByParamMap(paraMap);
 		if (wx_users != null && wx_users.size() > 0) {
