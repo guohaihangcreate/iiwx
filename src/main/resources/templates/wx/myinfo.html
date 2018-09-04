@@ -1,0 +1,60 @@
+<html lang="zh-cmn-Hans">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>个人中心</title>
+<link rel="stylesheet"
+	href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+<link rel="stylesheet"
+	href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+</head>
+<body>
+	<div class="weui-cells__title">我的</div>
+	<div class="content" th:object="${session.userinfo}">
+		<div class="list-block">
+			<ul>
+				<!-- Text inputs -->
+				<li>
+					<div class="item-content">
+						<div class="item-media">
+							<i class="icon icon-form-name"></i>
+						</div>
+						<div class="item-inner">
+							<div class="item-title label">
+								<img width="100" alt="" th:src="${session.userinfo.headimgurl}">
+								<br>
+							</div>
+							<div class="item-input">
+								用户昵称:<br> <span th:text="${session.userinfo.nickname}"></span>
+								<br> <br>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="item-content">
+						<div class="item-inner">
+							省份: <span th:text="${session.userinfo.province}"></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="item-content">
+						<div class="item-inner">
+							城市: <span th:text="${session.userinfo.city}"></span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div th:switch="${session.userinfo.sex}" class="item-content">
+						<div class="item-inner">
+							性别:<span th:case="1"> 男</span> <span th:case="2"> 女</span>
+							<span th:case="3"> 其他</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

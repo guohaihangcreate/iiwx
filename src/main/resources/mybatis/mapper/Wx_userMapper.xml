@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="ren.xiangmu.iiwx.mapper.UserMapper">
-	<cache type="ren.xiangmu.iiwx.redis.MybatisRedisCache" />
+<mapper namespace="ren.xiangmu.iiwx.mapper.Wx_userMapper">
+	<!-- <cache type="ren.xiangmu.iiwx.redis.MybatisRedisCache" /> -->
 	<resultMap id="BaseResultMap"
 		type="ren.xiangmu.iiwx.entity.Wx_user">
 		<id column="id" property="id" jdbcType="VARCHAR" />
@@ -56,6 +56,7 @@
 		from wx_user
 		<where>
 			<if test="id!=null">Id = #{id,jdbcType=INTEGER}</if>
+			<if test="openid!=null">openid = #{openid,jdbcType=VARCHAR}</if>
 			<if test="nickname!= null">
 				and nickname = #{nickname,jdbcType=VARCHAR}
 			</if>
@@ -94,7 +95,8 @@
 		WHERE id = #{id}
 	</select>
 
-	<insert id="insert" parameterType="ren.xiangmu.iiwx.entity.Wx_user">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="ren.xiangmu.iiwx.entity.Wx_user">
 		INSERT INTO
 		wx_user
 		(openid,
@@ -107,14 +109,36 @@
 		#{org_id},#{idno},
 		#{companyId},#{departId},#{password},#{createtime},#{modifyTime},#{registerTime},#{enterday},#{logintype})
 	</insert>
-	<update id="update" parameterType="ren.xiangmu.iiwx.entity.Wx_user">
-		UPDATE
+	<update id="updateByPrimaryKeyId"
+		parameterType="ren.xiangmu.iiwx.entity.Wx_user">
+		update
 		wx_user
-		SET
-		<if test="realname != null">realname = #{realname},</if>
-		<if test="openid != null">openid = #{openid},</if>
+		<set>
+			<if test="openid != null">openid = #{openid,jdbcType=VARCHAR},</if>
+			<if test="realname != null">realname = #{realname,jdbcType=VARCHAR},</if>
+			<if test="nickname != null">nickname = #{nickname,jdbcType=VARCHAR},</if>
+			<if test="country != null">country = #{country,jdbcType=VARCHAR},</if>
+			<if test="birthday != null">birthday = #{birthday,jdbcType=VARCHAR},</if>
+			<if test="province != null">province = #{province,jdbcType=VARCHAR},</if>
+			<if test="city != null">city = #{city,jdbcType=VARCHAR},</if>
+			<if test="mobile != null">mobile = #{mobile,jdbcType=VARCHAR},</if>
+			<if test="email != null">email = #{email,jdbcType=VARCHAR},</if>
+			<if test="sex != null">sex = #{sex,jdbcType=INTEGER},</if>
+			<if test="headimgurl != null">headimgurl = #{headimgurl,jdbcType=VARCHAR},</if>
+			<if test="unid != null">unid = #{unid,jdbcType=VARCHAR},</if>
+			<if test="org_id != null">org_id = #{org_id,jdbcType=VARCHAR},</if>
+			<if test="idno != null">idno = #{idno,jdbcType=VARCHAR},</if>
+			<if test="companyId != null">companyId = #{companyId,jdbcType=INTEGER},</if>
+			<if test="departId != null">departId = #{departId,jdbcType=INTEGER},</if>
+			<if test="password != null">password = #{password,jdbcType=VARCHAR},</if>
+			<if test="createtime != null">createtime = #{createtime,jdbcType=VARCHAR},</if>
+			<if test="modifyTime != null">modifyTime = #{modifyTime,jdbcType=VARCHAR},</if>
+			<if test="registerTime != null">registerTime = #{registerTime,jdbcType=VARCHAR},</if>
+			<if test="enterday != null">enterday = #{enterday,jdbcType=VARCHAR},</if>
+			<if test="logintype != null">logintype = #{logintype,jdbcType=INTEGER},</if>
+		</set>
 		WHERE
-		id = #{id}
+		id = #{id,jdbcType=INTEGER}
 	</update>
 
 	<delete id="delete" parameterType="java.lang.Integer">

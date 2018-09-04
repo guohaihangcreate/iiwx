@@ -12,13 +12,14 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
-import ren.xiangmu.iiwx.controller.HomeController;
+import ren.xiangmu.iiwx.servlet.WxAuthLogInServlet;
  
 public class MybatisRedisCache implements Cache {
  
 	@Autowired
 	private static JedisConnectionFactory jedisConnectionFactory;
-	private final static Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	private final static Logger logger = LoggerFactory.getLogger(WxAuthLogInServlet.class);
  
     private final String id;
  
@@ -133,8 +134,5 @@ public class MybatisRedisCache implements Cache {
         return result;
     }
  
-    public static void setJedisConnectionFactory(JedisConnectionFactory jedisConnectionFactory) {
-        MybatisRedisCache.jedisConnectionFactory = jedisConnectionFactory;
-    }
  
 }

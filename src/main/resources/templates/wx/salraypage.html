@@ -1,0 +1,123 @@
+<html lang="zh-cmn-Hans">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>薪资信息</title>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<link rel="shortcut icon" href="/favicon.ico">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="stylesheet"
+	href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+<link rel="stylesheet"
+	href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+
+</head>
+<body>
+	<div class="page-group">
+		<div class="page page-current">
+			<div class="content">
+				<div class="list-block">
+					<ul>
+						<!-- Text inputs -->
+						<li>
+							<div class="item-content" th:object="${session.userinfo}">
+								<div class="item-media" >
+									<i class="icon icon-form-name"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-input">
+										<input type="text" placeholder="选择查询月份" id='datetime-picker' />
+										<input type="hidden" th:value="${session.userinfo.idno}"
+											id="idno">
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="content-block">
+					<div class="row">
+						<div class="col-100">
+							<a id="datetime-picker_submit"
+								class="button button-big button-fill button-success button-center"
+								style="">提交</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<script type='text/javascript'
+		src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+	<script type='text/javascript'
+		src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+	<script type='text/javascript'
+		src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+
+</body>
+<script type="text/javascript">
+	$("#datetime-picker_submit").click(
+			function() {
+				var queryDate = $("#datetime-picker").val();
+				var queryidon = $("#idno").val();
+				if (queryidon == '') {
+					alert("非实名认证用户不能使用本功能！");
+					return false;
+				}
+				window.location.href = "/salaryRemoteDate?queryDate="
+						+ queryDate + "&queryidon=" + queryidon;
+			});
+	$(document)
+			.ready(
+					function() {
+						var date = new Date;
+						var year = date.getFullYear();
+						var month = date.getMonth();
+						var year_month = year + "年  " + month + "月";
+						$("#datetime-picker").val(year_month);
+						$("#datetime-picker")
+								.picker(
+										{
+											toolbarTemplate : '<header class="bar bar-nav">\
+	  			<button class="button button-link pull-left">按钮</button>\
+	  			<button class="button button-link pull-right close-picker">确定</button>\
+	  			<h1 class="title">查询月份选择</h1>\
+	  			</header>',
+											cols : [
+													{
+														textAlign : 'center',
+														values : [
+																date
+																		.getFullYear()
+																		- 3
+																		+ "年 ",
+																date
+																		.getFullYear()
+																		- 2
+																		+ "年  ",
+																date
+																		.getFullYear()
+																		- 1
+																		+ "年  ",
+																date
+																		.getFullYear()
+																		+ "年  " ]
+													//如果你希望显示文案和实际值不同，可以在这里加一个displayValues: [.....]
+													},
+													{
+														textAlign : 'center',
+														values : [ '1月', '2月',
+																'3月', '4月',
+																'5月', '6月',
+																'7月', '8月',
+																'9月', '10月',
+																'11月', '12月' ]
+													} ]
+										});
+					})
+</script>
+</html>

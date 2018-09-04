@@ -4,22 +4,22 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import ren.xiangmu.iiwx.entity.User;
+import ren.xiangmu.iiwx.controller.RemoteDateController;
 import ren.xiangmu.iiwx.entity.Wx_user;
 
 @Mapper
 @Repository
-public interface UserMapper {
+public interface Wx_userMapper {
 	
-	List<User> getAll();
-
 	Wx_user getOne(Integer id);
 
-	void insert(Wx_user wx_user);
+	int insert(Wx_user wx_user);
 
-	void update(Wx_user wx_user);
+	void updateByPrimaryKeyId(Wx_user wx_user);
 
 	void delete(Integer id);
 	

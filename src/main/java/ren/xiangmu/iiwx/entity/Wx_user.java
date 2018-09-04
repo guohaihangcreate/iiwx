@@ -10,6 +10,8 @@ public class Wx_user {
 
 	private int id;
 	
+	private String unid;
+	
 	private String country;
 	
 	private String password;
@@ -126,6 +128,14 @@ public class Wx_user {
 
 	public void setCompanyId(String companyId) {
 		this.companyId = companyId;
+	}
+	
+	public String getUnid() {
+		return unid;
+	}
+
+	public void setUnid(String unid) {
+		this.unid = unid;
 	}
 
 	public String getDepartId() {

@@ -1,0 +1,231 @@
+<html lang="zh-cmn-Hans">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>注册</title>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<meta http-equiv="Cache-Control"
+	content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="stylesheet"
+	href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+<link rel="stylesheet"
+	href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+<link rel="stylesheet" href="js/jquery-3.3.1.min.js">
+</head>
+<body>
+	<div class="page-group">
+		<div class="page page-current">
+			<div class="content">
+				<div class="list-block">
+					<ul>
+						<!-- Text inputs -->
+						<li>
+							<div class="item-content" th:object="${session.userinfo}">
+								<div class="item-media">
+									<i class="icon icon-form-name"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">真实姓名</div>
+									<div class="item-input">
+										<input type="text" placeholder="真实姓名" name="realname"
+											id="realname"> <input type="hidden"
+											th:value="${session.userinfo.openid}" id="openid">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-email"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">邮件</div>
+									<div class="item-input">
+										<input type="email" placeholder="邮件" id="email"
+											onchange="validate();">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-password"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">密码</div>
+									<div class="item-input">
+										<input type="password" placeholder="密码" id="password">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-gender"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">性别</div>
+									<div class="item-input">
+										<select id="sex_user" name="sex">
+											<option selected="selected" value="1">男</option>
+											<option value="2">女</option>
+											<option value="0">未知</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</li>
+						<!-- Date -->
+						<li>
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-calendar"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">生日</div>
+									<div class="item-input">
+										<input type="date" placeholder="生日" value="1980-04-30"
+											name="birthday" id="birthday">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-calendar"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">入职日期</div>
+									<div class="item-input">
+										<input type="date" placeholder="入职日期" value="2014-04-30"
+											name="enterDay" id="enterDay">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="align-top">
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-comment"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">手机号码</div>
+									<div class="item-input">
+										<input type="text" placeholder="手机号码" name="mobile"
+											id="mobile">
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="align-top">
+							<div class="item-content">
+								<div class="item-media">
+									<i class="icon icon-form-comment"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title label">身份证号</div>
+									<div class="item-input">
+										<input type="text" placeholder="身份证号" name="ino" id="ino">
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="content-block">
+					<div class="row">
+						<div class="col-100">
+							<a id="btn" class="button button-big button-fill button-danger">注册</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+<script type='text/javascript'
+	src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript'
+	src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript'
+	src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<script type="text/javascript">
+function validate() {
+	var email_ = $("#email").val();
+	var openid_ = $("#openid").val();
+	$.ajax({
+		　　　　url : 'ajaxcheckEmailPassWord',　   <!-- url  :请求地址 --> 
+		　　　　type : 'post',　　　　　　　　<!--type ：请求类型:post/get --> 
+			  xhrFields: {
+		           withCredentials: true
+		       },
+	          crossDomain: true,
+		　　　　data : {　　　　　　　　　　　<!--data ：发送给服务器的数据 -->
+					  openid : openid_,
+					 email  : email_
+		　　　　　　},
+		　　　　dataType : 'json',                    <!--dataType:服务器返回的数据类型 text/xml/script/html/json/jsonp -->
+		　　　　success: function(data){　　　<!--回调函数 --> 
+//		　　　　　　console.log(data);         <!--浏览器控制台显示返回内容（建议使用） -->  
+		　　　　　　if(data){
+					$("#email").css("warning");
+					$("#email").val("");
+					$("#email").attr("placeholder", "请输入email");
+		　　　　　　}　　　　　     <!--弹框显示返回内容  -->
+		　　　　　　}
+		　　　　});
+}
+
+$(document).ready(function(){
+	$("#btn").click(function(){
+	   var openid = $("#openid").val();
+	   var realname = $("#realname").val()
+	    if(realname==''){
+    		$("#realname").css("border-style","solid");
+    		$("#realname").css("border-color","#ff0000");
+			$("#realname").attr("placeholder", "请输入真实姓名");
+    		return false;
+    	}
+    	var email = $("#email").val();
+      	var password = $("#password").val();
+      	if(password==''){
+      		$("#password").css("border-style","solid");
+    		$("#password").css("border-color","#ff0000");
+			$("#password").attr("placeholder", "请输入密码");
+      		return false;
+      	}
+     	var  myselect=document.getElementById("sex_user");
+     	var index = myselect.selectedIndex;//获取选中的index
+     	var sex = myselect.options[index].value;//获取value值
+    	var birthday = $("#birthday").val();
+        var enterDay = $("#enterDay").val();
+    	var mobile = $("#mobile").val();
+    	if(mobile==''){
+    		$("#mobile").css("border-style","solid");
+    		$("#mobile").css("border-color","#ff0000");
+			$("#mobile").attr("placeholder", "请输入注册微信所使用的手机号");
+    		return false;
+    	}
+		var ino = $("#ino").val();
+    	if(ino==''){
+    		$("#ino").css("border-style","solid");
+    		$("#ino").css("border-color","#ff0000");
+			$("#ino").attr("placeholder", "内部员工请输入身份证号实名制注册");
+    		return false;
+    	}
+    	window.location.href="callback?optiontype=registered&openid="+openid+"&realname="+realname+"&email="+email+"&password="
+    			+password+"&sex="+sex+"&birthday="+birthday+"&enterDay"+enterDay+"&mobile="+mobile+"&ino="+ino;
+	})
+})
+</script>
+</html>

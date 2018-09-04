@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import ren.xiangmu.iiwx.entity.User;
-import ren.xiangmu.iiwx.mapper.UserMapper;
+import ren.xiangmu.iiwx.entity.Wx_user;
+import ren.xiangmu.iiwx.mapper.Wx_userMapper;
 
 @Controller
 public class HomeController {
@@ -22,11 +22,11 @@ public class HomeController {
 	}
 
 	@Autowired
-	private UserMapper userMapper;
+	private Wx_userMapper wx_userMapper;
 
 	@RequestMapping("/getUsers")
 	public String getUsers(Model model) {
-		List<User> users = userMapper.getAll();
+		List<Wx_user> users = wx_userMapper.pageListByParamMap(null);
 		model.addAttribute("users", users);
 		return "user/userList";
 	}

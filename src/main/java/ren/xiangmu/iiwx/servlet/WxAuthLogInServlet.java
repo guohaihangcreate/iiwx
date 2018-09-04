@@ -14,8 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import net.sf.json.JSONObject;
 import ren.xiangmu.iiwx.entity.Wx_user;
@@ -23,16 +27,23 @@ import ren.xiangmu.iiwx.service.WxUserService;
 import ren.xiangmu.iiwx.util.Md5;
 import ren.xiangmu.iiwx.util.WxAuthUtil;
 //@WebServlet("/wxAuthLogIn")
-
 @WebServlet(urlPatterns = "/wxAuthLogIn")
 public class WxAuthLogInServlet extends HttpServlet {
-	
+	private static final Logger LOG = LoggerFactory.getLogger(WxAuthLogInServlet.class);
 	public void init() throws ServletException {
 		super.init();
 		//获取autowire的bean
 		WebApplicationContextUtils.getWebApplicationContext(getServletContext()).getAutowireCapableBeanFactory()
 				.autowireBean(this);
 	}
+
+	@Bean
+	public InternalResourceViewResolver viewResolver() {
+	        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+	        viewResolver.setPrefix("WEB-INF/wx/");
+	        viewResolver.setSuffix(".jsp");
+	        return viewResolver;
+	 }
 
 	
 	@Autowired
@@ -99,7 +110,7 @@ public class WxAuthLogInServlet extends HttpServlet {
 				}else {
 					IsOK = false;
 					wx_u.setLogintype(1);//״̬
-					wxUserService.updateByPrimaryKeySelective(wx_u);
+					wxUserService.updateByPrimaryKeyId(wx_u);
 					request.getSession().setAttribute("userinfo", wxUserService.getOne(wx_u.getId()));//
 				}
 				JSONObject json = new JSONObject();
