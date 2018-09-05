@@ -19,7 +19,7 @@ public interface Wx_userMapper {
 
 	int insert(Wx_user wx_user);
 
-	void updateByPrimaryKeyId(Wx_user wx_user);
+	int updateByPrimaryKeyId(Wx_user wx_user);
 
 	void delete(Integer id);
 	

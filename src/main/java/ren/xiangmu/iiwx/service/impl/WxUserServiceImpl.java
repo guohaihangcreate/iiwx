@@ -31,9 +31,8 @@ public class WxUserServiceImpl implements WxUserService {
 	}
 
 	@Override
-	public void updateByPrimaryKeyId(Wx_user wx_user) {
-		// TODO Auto-generated method stub
-		wx_userMapper.updateByPrimaryKeyId(wx_user);
+	public int updateByPrimaryKeyId(Wx_user wx_user) {
+		return wx_userMapper.updateByPrimaryKeyId(wx_user);
 	}
 
 	@Override

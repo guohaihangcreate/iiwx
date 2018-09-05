@@ -12,7 +12,7 @@ public interface WxUserService {
 	
 	public List<Wx_user> pageListByParamMap(Map param);
 	
-	public void updateByPrimaryKeyId(Wx_user wx_user);
+	public int updateByPrimaryKeyId(Wx_user wx_user);
 	
 	public Wx_user getOne(Integer id);
 	
