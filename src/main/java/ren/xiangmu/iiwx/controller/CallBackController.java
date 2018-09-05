@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import net.sf.json.JSONObject;
 import ren.xiangmu.iiwx.entity.Wx_user;
 import ren.xiangmu.iiwx.service.WxUserService;
+import ren.xiangmu.iiwx.util.Md5;
 import ren.xiangmu.iiwx.util.WxAuthUtil;
 
 @Controller
@@ -42,11 +43,11 @@ public class CallBackController {
 	private String callback(ModelMap map,
 			HttpServletRequest request) { /** @RequestParam("name")绑定请求地址中的name到参数name中 ModelMap map 存放返回内容 */
 		String optiontype = request.getParameter("optiontype");
-		HttpSession session= request.getSession();
+		HttpSession session = request.getSession();
 		String dispatcherpage = "login_wx";
 		Wx_user userinfo = null;
 		List<Wx_user> userinfos = null;
-		if (StringUtils.isNotBlank(optiontype) && "registered".equals(optiontype)) {
+		/*if (StringUtils.isNotBlank(optiontype) && "registered".equals(optiontype)) {
 			Wx_user user = new Wx_user();
 			Wx_user wx_user = (Wx_user) request.getSession().getAttribute("userinfo");
 			String openid = wx_user.getOpenid();
@@ -92,11 +93,12 @@ public class CallBackController {
 				user.setIdno(ino);
 			}
 			// 用注册信息中的信息完善user
-			wxUserService.updateByPrimaryKeyId(user); 
+			wxUserService.updateByPrimaryKeyId(user);
 			session.setAttribute("userinfo", wxUserService.getOne(user.getId()));
 			dispatcherpage = "wx/nav_tabbar";
-		}
+		}*/
 		if (StringUtils.isNotBlank(optiontype) && "login".equals(optiontype)) {
+			Md5 md5 = new Md5();
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			Map queryparam = new HashMap();
@@ -105,6 +107,7 @@ public class CallBackController {
 			}
 			if (StringUtils.isNotBlank(password)) {
 				queryparam.put("password", password);
+				md5.GetMD5Code(password);
 			}
 			List<Wx_user> wxusers = wxUserService.pageListByParamMap(queryparam);
 			if (wxusers != null && wxusers.size() > 0) {
@@ -156,36 +159,98 @@ public class CallBackController {
 				}
 				userinfo.setOpenid(openid);
 				// 根据openId查询该用户是否已经注册
-				Map queryMap = new HashMap<String,String>();
+				Map queryMap = new HashMap<String, String>();
 				queryMap.put("openid", openid);
 				List<Wx_user> wx_users = wxUserService.pageListByParamMap(queryMap);
-				if(wx_users!=null&&wx_users.size()>0) {
+				if (wx_users != null && wx_users.size() > 0) {
 					Wx_user wx_user = wx_users.get(0);
 					wxUserService.updateByPrimaryKeyId(wx_user);
 					session.setAttribute("userinfo", wxUserService.getOne(wx_user.getId()));
-				}else {
+				} else {
 					wxUserService.insert(userinfo);
 					session.setAttribute("userinfo", wxUserService.getOne(userinfo.getId()));
 				}
 				/*
 				 * 更新session中的用户微信注册信息
 				 */
-				if(session.getAttribute("userinfo")!=null) {
+				if (session.getAttribute("userinfo") != null) {
 					Wx_user wx_user = (Wx_user) session.getAttribute("userinfo");
-					//session中用户名和密码都不为空直接允许登陆
-					if(wx_user.getEmail()!=null&&wx_user.getPassword()!=null) {
+					// session中用户名和密码都不为空直接允许登陆
+					if (wx_user.getEmail() != null && wx_user.getPassword() != null) {
 						dispatcherpage = "wx/nav_tabbar";
-					}else {
-						//跳入登陆页面
+					} else {
+						// 跳入登陆页面
 						dispatcherpage = "login_wx";
 					}
-				}else {
-					//跳入登陆页面
+				} else {
+					// 跳入登陆页面
 					dispatcherpage = "login_wx";
 				}
-			} 
+			}
 		}
 		return dispatcherpage; /** 返回的是显示数据的html的文件名 */
+	}
+
+	@RequestMapping(value = "/ajaxRegistered", method = RequestMethod.POST)
+	@ResponseBody
+	private boolean ajaxRegistered(HttpServletRequest request,
+			HttpServletResponse response) { /** @RequestParam("name")绑定请求地址中的name到参数name中 ModelMap map 存放返回内容 */
+		boolean IsOK = false;
+		Md5 md5 = new Md5();
+		HttpSession session = request.getSession();
+		Wx_user user = new Wx_user();
+		Wx_user wx_user = (Wx_user) request.getSession().getAttribute("userinfo");
+		String openid = wx_user.getOpenid();
+		if (StringUtils.isNotBlank(openid)) {
+			user.setOpenid(openid);
+		}
+		String realname = request.getParameter("realname");
+		if (StringUtils.isNotBlank(realname)) {
+			user.setRealname(realname);
+		}
+		String email = request.getParameter("email");
+		if (StringUtils.isNotBlank(email)) {
+			user.setEmail(email);
+		}
+		String password = request.getParameter("password");
+		if (StringUtils.isNotBlank(password)) {
+			user.setPassword(password);
+			md5.GetMD5Code(password);
+		}
+		String sex = request.getParameter("sex");
+		if (StringUtils.isNotBlank(sex)) {
+			user.setSex(Integer.valueOf(sex));
+		}
+		String birthday = request.getParameter("birthday");
+		if (StringUtils.isNotBlank(sex)) {
+			user.setBirthday(birthday);
+		}
+		String enterDay = request.getParameter("enterDay");
+		if (StringUtils.isNotBlank(enterDay)) {
+			user.setEnterday(enterDay);
+		}
+		String mobile = request.getParameter("mobile");
+		if (StringUtils.isNotBlank(mobile)) {
+			user.setMobile(mobile);
+		}
+		String ino = request.getParameter("ino");
+		if (StringUtils.isNotBlank(ino)) {
+			user.setIdno(ino);
+		}
+		if (wx_user != null) {
+			user.setId(wx_user.getId());
+		}
+		if (StringUtils.isNotBlank(ino)) {
+			user.setIdno(ino);
+		}
+		// macthednum更新成功的条数
+		int macthednum = wxUserService.updateByPrimaryKeyId(user);
+		session.setAttribute("userinfo", wxUserService.getOne(user.getId()));
+
+		if (macthednum > 0) {
+			IsOK = true;
+		}
+		return IsOK;
 	}
 
 	@RequestMapping(value = "/login_wx", method = RequestMethod.GET)
@@ -202,6 +267,11 @@ public class CallBackController {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	private String dispatchRegister(ModelMap map) { /** @RequestParam("name")绑定请求地址中的name到参数name中 ModelMap map 存放返回内容 */
 		return "register"; /** 返回的是显示数据的html的文件名 */
+	}
+	
+	@RequestMapping(value = "/nav_tabbar", method = RequestMethod.GET)
+	private String dispatchNav_tabbar(ModelMap map) { /** @RequestParam("name")绑定请求地址中的name到参数name中 ModelMap map 存放返回内容 */
+		return "wx/nav_tabbar"; /** 返回的是显示数据的html的文件名 */
 	}
 
 	@RequestMapping(value = "/wx_main", method = RequestMethod.GET)
@@ -249,7 +319,8 @@ public class CallBackController {
 	}
 
 	@RequestMapping(value = "/salraypage", method = RequestMethod.GET)
-	private String salraypage(HttpServletRequest request,ModelMap map) { /** @RequestParam("name")绑定请求地址中的name到参数name中 ModelMap map 存放返回内容 */
+	private String salraypage(HttpServletRequest request,
+			ModelMap map) { /** @RequestParam("name")绑定请求地址中的name到参数name中 ModelMap map 存放返回内容 */
 		request.getSession().getAttribute("userinfo");
 		return "wx/salraypage"; /** 返回的是显示数据的html的文件名 */
 	}
