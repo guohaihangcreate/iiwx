@@ -133,7 +133,8 @@
 								<div class="item-inner">
 									<div class="item-title label">身份证号</div>
 									<div class="item-input">
-										<input type="text" placeholder="身份证号" name="ino" id="ino" onchange="isCardNo(this.value);">
+										<input type="text" placeholder="身份证号" name="ino" id="ino"
+											onchange="isCardNo(this.value);">
 									</div>
 								</div>
 							</div>
@@ -148,7 +149,6 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </body>
@@ -157,7 +157,8 @@
 <script type='text/javascript'
 	src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
 <script type='text/javascript'
-	src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+	src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'>
+	charset='utf-8'></script>
 <script type="text/javascript">
 //校验电话
 function isPoneAvailable(str) {
@@ -233,6 +234,7 @@ function validate() {
 		　　　　});
 }
 
+
 $(document).ready(function(){
 	$("#btn").click(function(){
 	   var realname = $("#realname").val()
@@ -275,8 +277,37 @@ $(document).ready(function(){
 			$("#ino").attr("placeholder", "内部员工请输入身份证号实名制注册");
     		return false;
     	}
-    	window.location.href="callback?optiontype=registered&realname="+realname+"&email="+email+"&password="
-    			+password+"&sex="+sex+"&birthday="+birthday+"&enterDay"+enterDay+"&mobile="+mobile+"&ino="+ino;
+    	$.ajax({
+			　　　　url : 'ajaxRegistered',　   <!-- url  :请求地址 --> 
+			　　　　type : 'post',　　　　　　　　<!--type ：请求类型:post/get --> 
+ 			  xhrFields: {
+ 		           withCredentials: true
+ 		       },
+		          crossDomain: true,
+			　　　　data : {　　　　　　　　　　　<!--data ：发送给服务器的数据 -->
+						 email  : email,
+			　　　　　　　　password : password,　　　　　　  <!-- 使用自己声明的对象 --> 
+						realname : realname,
+						email : email,
+						password : password,
+						sex : sex,
+						birthday : birthday,
+						enterDay : enterDay,
+						mobile : mobile,
+						ino : ino
+			　　　　　　},
+			　　　　dataType : 'json',                    <!--dataType:服务器返回的数据类型 text/xml/script/html/json/jsonp -->
+			　　　　success: function(data){　　　<!--回调函数 -->        
+			　　　　　　if(data){
+						$.alert('注册成功', function () {
+							window.location.href="nav_tabbar?v="+Math.random();
+					      });
+			　　　　　　}　else{
+						$.alert('注册不成功');
+			　　　　　　}　　　　
+			　　　　　　}
+			　　　　});
+    	
 	})
 })
 </script>
