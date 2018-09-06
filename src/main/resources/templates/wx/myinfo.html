@@ -9,52 +9,66 @@
 	href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
 </head>
 <body>
-	<div class="weui-cells__title">我的</div>
+	<!-- 	<div class="weui-cells__title">我的</div> -->
 	<div class="content" th:object="${session.userinfo}">
 		<div class="list-block">
 			<ul>
 				<!-- Text inputs -->
-				<li>
-					<div class="item-content">
-						<div class="item-media">
-							<i class="icon icon-form-name"></i>
-						</div>
-						<div class="item-inner">
-							<div class="item-title label">
-								<img width="100" alt="" th:src="${session.userinfo.headimgurl}">
-								<br>
-							</div>
-							<div class="item-input">
-								用户昵称:<br> <span th:text="${session.userinfo.nickname}"></span>
-								<br> <br>
+				<li ><a href="todispatchpage?dispatchpage=my_info">
+						<div class="item-content">
+							<div class="item-inner">
+								<div class="item-title label">
+									<img width="100" alt="" th:src="${session.userinfo.headimgurl}">
+									用户昵称:<span th:text="${session.userinfo.nickname}" style="text-align: left;margin-left: 0px;padding-left: 0px;"></span>
+								</div>
+								<div class="item-input" align="left">
+									
+									<br> <br>
+								</div>
 							</div>
 						</div>
-					</div>
-				</li>
-				<li>
-					<div class="item-content">
-						<div class="item-inner">
-							省份: <span th:text="${session.userinfo.province}"></span>
+				</a></li>
+				<li ><a href="">
+						<div class="item-content">
+							<div class="item-inner">
+								简历
+							</div>
 						</div>
-					</div>
-				</li>
-				<li>
-					<div class="item-content">
-						<div class="item-inner">
-							城市: <span th:text="${session.userinfo.city}"></span>
+				</a></li>
+				<li ><a href="">
+						<div class="item-content">
+							<div class="item-inner">
+								钱包
+							</div>
 						</div>
-					</div>
-				</li>
-				<li>
-					<div th:switch="${session.userinfo.sex}" class="item-content">
-						<div class="item-inner">
-							性别:<span th:case="1"> 男</span> <span th:case="2"> 女</span>
-							<span th:case="3"> 其他</span>
+				</a></li>
+				<li ><a href="">
+						<div class="item-content">
+							<div class="item-inner">
+								卡劵
+							</div>
 						</div>
-					</div>
-				</li>
+				</a></li>
+				<li ><a href="todispatchpage?dispatchpage=self_setting">
+						<div class="item-content">
+							<div class="item-inner">
+								设置
+							</div>
+						</div>
+				</a></li>
 			</ul>
 		</div>
 	</div>
 </body>
+<script type='text/javascript'
+	src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript'
+	src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript'
+	src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'>
+	charset = 'utf-8'>
+</script>
+<script type="text/javascript">
+	
+</script>
 </html>

@@ -257,6 +257,12 @@ public class CallBackController {
 	private String dispatchLogin_wx(ModelMap map) { /** @RequestParam("name")绑定请求地址中的name到参数name中 ModelMap map 存放返回内容 */
 		return "login_wx"; /** 返回的是显示数据的html的文件名 */
 	}
+	
+	@RequestMapping(value = "/todispatchpage", method = RequestMethod.GET)
+	private String dispatchpage(HttpServletRequest request) { /** @RequestParam("name")绑定请求地址中的name到参数name中 ModelMap map 存放返回内容 */
+		String dispatchpage = request.getParameter("dispatchpage");
+		return "wx/"+dispatchpage; /** 返回的是显示数据的html的文件名 */
+	}
 
 	@RequestMapping(value = "/forgetPassWord", method = RequestMethod.GET)
 	private String dispatchForgetPassWord(

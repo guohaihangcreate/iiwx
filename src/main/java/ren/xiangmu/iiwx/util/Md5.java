@@ -15,7 +15,6 @@ public class Md5 {
     public Md5() {
     }
 
-    // ������ʽΪ���ָ��ַ���
     private static String byteToArrayString(byte bByte) {
         int iRet = bByte;
         // System.out.println("iRet="+iRet);
