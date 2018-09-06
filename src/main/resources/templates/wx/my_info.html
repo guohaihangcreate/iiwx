@@ -1,0 +1,70 @@
+<html lang="zh-cmn-Hans">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>个人中心</title>
+<link rel="stylesheet"
+	href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+<link rel="stylesheet"
+	href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+</head>
+<body>
+	<!-- 	<div class="weui-cells__title">我的</div> -->
+	<div class="content" th:object="${session.userinfo}">
+		<div class="list-block">
+			<ul>
+				<!-- Text inputs -->
+				<li>
+						<div class="item-content">
+							<div class="item-inner">
+								<div class="item-title label">
+									头像：<img width="100" alt="" th:src="${session.userinfo.headimgurl}">
+									<br>
+								</div>
+							</div>
+						</div>
+				</a></li>
+				<li >
+					<div class="item-content">
+						<div class="item-inner" >
+							昵称 <span th:text="${session.userinfo.nickname}"></span>
+						</div>
+					</div>
+				</li>
+				<li >
+					<div class="item-content">
+						<div class="item-inner">
+							身份证号码 <span th:text="${session.userinfo.idno}"></span>
+						</div>
+					</div>
+				</li>
+				<li >
+					<div class="item-content">
+						<div class="item-inner">
+							手机号<span th:text="${session.userinfo.mobile}"></span>
+						</div>
+					</div>
+				</li>
+				<li >
+					<div class="item-content">
+						<div class="item-inner">
+							手机号<span th:text="${session.userinfo.email}"></span>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+<script type='text/javascript'
+	src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript'
+	src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript'
+	src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'>
+	charset = 'utf-8'>
+</script>
+<script type="text/javascript">
+	
+</script>
+</html>
