@@ -29,6 +29,10 @@
 			jdbcType="VARCHAR" />
 		<result column="password" property="password"
 			jdbcType="VARCHAR" />
+		<result column="validateCode" property="validateCode"
+			jdbcType="VARCHAR" />
+		<result column="outDate" property="outDate"
+			jdbcType="TIMESTAMP" />
 		<result column="createtime" property="createtime"
 			jdbcType="TIMESTAMP" />
 		<result column="modifyTime" property="modifyTime"
@@ -42,7 +46,7 @@
 	<sql id="Base_Column_List">
 		id,openid, realname,
 		nickname,country,birthday,province,city,mobile,email,sex,headimgurl,unid,org_id,idno,
-		companyId,departId,password,createtime,modifyTime,registerTime,enterday,logintype
+		companyId,departId,password,validateCode,outDate,createtime,modifyTime,registerTime,enterday,logintype
 	</sql>
 
 	<select id="getAll" resultMap="BaseResultMap">
@@ -102,12 +106,12 @@
 		(openid,
 		realname,
 		nickname,country,birthday,province,city,mobile,email,sex,headimgurl,unid,org_id,idno,
-		companyId,departId,password,createtime,modifyTime,registerTime,enterday,logintype)
+		companyId,departId,password,validateCode,outDate,createtime,modifyTime,registerTime,enterday,logintype)
 		VALUES
 		(#{openid},#{realname},
 		#{nickname},#{country},#{birthday},#{province},#{city},#{mobile},#{email},#{sex},#{headimgurl},#{unid},
 		#{org_id},#{idno},
-		#{companyId},#{departId},#{password},#{createtime},#{modifyTime},#{registerTime},#{enterday},#{logintype})
+		#{companyId},#{departId},#{password},#{validateCode},#{outDate},#{createtime},#{modifyTime},#{registerTime},#{enterday},#{logintype})
 	</insert>
 	<update id="updateByPrimaryKeyId"
 		parameterType="ren.xiangmu.iiwx.entity.Wx_user">
@@ -131,6 +135,8 @@
 			<if test="companyId != null">companyId = #{companyId,jdbcType=INTEGER},</if>
 			<if test="departId != null">departId = #{departId,jdbcType=INTEGER},</if>
 			<if test="password != null">password = #{password,jdbcType=VARCHAR},</if>
+			<if test="password != null">validateCode = #{validateCode,jdbcType=VARCHAR},</if>
+			<if test="password != null">outDate = #{outDate,jdbcType=VARCHAR},</if>
 			<if test="createtime != null">createtime = #{createtime,jdbcType=VARCHAR},</if>
 			<if test="modifyTime != null">modifyTime = #{modifyTime,jdbcType=VARCHAR},</if>
 			<if test="registerTime != null">registerTime = #{registerTime,jdbcType=VARCHAR},</if>

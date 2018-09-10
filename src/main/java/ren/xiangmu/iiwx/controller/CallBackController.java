@@ -47,73 +47,6 @@ public class CallBackController {
 		String dispatcherpage = "login_wx";
 		Wx_user userinfo = null;
 		List<Wx_user> userinfos = null;
-		/*if (StringUtils.isNotBlank(optiontype) && "registered".equals(optiontype)) {
-			Wx_user user = new Wx_user();
-			Wx_user wx_user = (Wx_user) request.getSession().getAttribute("userinfo");
-			String openid = wx_user.getOpenid();
-			if (StringUtils.isNotBlank(openid)) {
-				user.setOpenid(openid);
-			}
-			String realname = request.getParameter("realname");
-			if (StringUtils.isNotBlank(realname)) {
-				user.setRealname(realname);
-			}
-			String email = request.getParameter("email");
-			if (StringUtils.isNotBlank(email)) {
-				user.setEmail(email);
-			}
-			String password = request.getParameter("password");
-			if (StringUtils.isNotBlank(password)) {
-				user.setPassword(password);
-			}
-			String sex = request.getParameter("sex");
-			if (StringUtils.isNotBlank(sex)) {
-				user.setSex(Integer.valueOf(sex));
-			}
-			String birthday = request.getParameter("birthday");
-			if (StringUtils.isNotBlank(sex)) {
-				user.setBirthday(birthday);
-			}
-			String enterDay = request.getParameter("enterDay");
-			if (StringUtils.isNotBlank(enterDay)) {
-				user.setEnterday(enterDay);
-			}
-			String mobile = request.getParameter("mobile");
-			if (StringUtils.isNotBlank(mobile)) {
-				user.setMobile(mobile);
-			}
-			String ino = request.getParameter("ino");
-			if (StringUtils.isNotBlank(ino)) {
-				user.setIdno(ino);
-			}
-			if (wx_user != null) {
-				user.setId(wx_user.getId());
-			}
-			if (StringUtils.isNotBlank(ino)) {
-				user.setIdno(ino);
-			}
-			// 用注册信息中的信息完善user
-			wxUserService.updateByPrimaryKeyId(user);
-			session.setAttribute("userinfo", wxUserService.getOne(user.getId()));
-			dispatcherpage = "wx/nav_tabbar";
-		}*/
-		if (StringUtils.isNotBlank(optiontype) && "login".equals(optiontype)) {
-			Md5 md5 = new Md5();
-			String email = request.getParameter("email");
-			String password = request.getParameter("password");
-			Map queryparam = new HashMap();
-			if (StringUtils.isNotBlank(email)) {
-				queryparam.put("email", email);
-			}
-			if (StringUtils.isNotBlank(password)) {
-				queryparam.put("password", password);
-				md5.GetMD5Code(password);
-			}
-			List<Wx_user> wxusers = wxUserService.pageListByParamMap(queryparam);
-			if (wxusers != null && wxusers.size() > 0) {
-				Wx_user user = wxusers.get(0);
-			}
-		}
 		if (StringUtils.isBlank(optiontype)) {
 			// 首次进入公众号
 			String code = request.getParameter("code");
@@ -161,20 +94,22 @@ public class CallBackController {
 				// 根据openId查询该用户是否已经注册
 				Map queryMap = new HashMap<String, String>();
 				queryMap.put("openid", openid);
+				int userid ;
 				List<Wx_user> wx_users = wxUserService.pageListByParamMap(queryMap);
 				if (wx_users != null && wx_users.size() > 0) {
 					Wx_user wx_user = wx_users.get(0);
 					wxUserService.updateByPrimaryKeyId(wx_user);
-					session.setAttribute("userinfo", wxUserService.getOne(wx_user.getId()));
+					userid = wx_user.getId();
+					
 				} else {
 					wxUserService.insert(userinfo);
-					session.setAttribute("userinfo", wxUserService.getOne(userinfo.getId()));
+					userid = userinfo.getId();
 				}
+				Wx_user wx_user = wxUserService.getOne(userid);
 				/*
 				 * 更新session中的用户微信注册信息
 				 */
 				if (session.getAttribute("userinfo") != null) {
-					Wx_user wx_user = (Wx_user) session.getAttribute("userinfo");
 					// session中用户名和密码都不为空直接允许登陆
 					if (wx_user.getEmail() != null && wx_user.getPassword() != null) {
 						dispatcherpage = "wx/nav_tabbar";
@@ -186,9 +121,36 @@ public class CallBackController {
 					// 跳入登陆页面
 					dispatcherpage = "login_wx";
 				}
+				//如果session中存在该记录标识没有登出操作，重新进入更新
+				session.setAttribute("userinfo", wxUserService.getOne(userid));
 			}
 		}
 		return dispatcherpage; /** 返回的是显示数据的html的文件名 */
+	}
+	
+	@RequestMapping(value = "/ajaxLogIn", method = RequestMethod.POST)
+	@ResponseBody
+	private boolean ajaxLogIn(HttpServletRequest request,
+			HttpServletResponse response) { /** @RequestParam("name")绑定请求地址中的name到参数name中 ModelMap map 存放返回内容 */
+		boolean IsOK = false;
+		HttpSession session = request.getSession();
+		Md5 md5 = new Md5();
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		Map queryparam = new HashMap();
+		if (StringUtils.isNotBlank(email)) {
+			queryparam.put("email", email);
+		}
+		if (StringUtils.isNotBlank(password)) {
+			queryparam.put("password",md5.GetMD5Code(password));//
+		}
+		List<Wx_user> wxusers = wxUserService.pageListByParamMap(queryparam);
+		if (wxusers != null && wxusers.size() > 0) {
+			Wx_user user = wxusers.get(0);
+			session.setAttribute("userinfo", user);
+			IsOK = true;
+		}
+		return IsOK;
 	}
 
 	@RequestMapping(value = "/ajaxRegistered", method = RequestMethod.POST)
@@ -214,8 +176,7 @@ public class CallBackController {
 		}
 		String password = request.getParameter("password");
 		if (StringUtils.isNotBlank(password)) {
-			user.setPassword(password);
-			md5.GetMD5Code(password);
+			user.setPassword(md5.GetMD5Code(password));
 		}
 		String sex = request.getParameter("sex");
 		if (StringUtils.isNotBlank(sex)) {
@@ -251,6 +212,13 @@ public class CallBackController {
 			IsOK = true;
 		}
 		return IsOK;
+	}
+	
+	@RequestMapping(value = "/login_out", method = RequestMethod.GET)
+	private String dispatchLogin_out(HttpServletRequest request,ModelMap map) { /** @RequestParam("name")绑定请求地址中的name到参数name中 ModelMap map 存放返回内容 */
+		HttpSession session = request.getSession();
+		session.removeAttribute("userinfo");
+		return "login_wx"; /** 返回的是显示数据的html的文件名 */
 	}
 
 	@RequestMapping(value = "/login_wx", method = RequestMethod.GET)
@@ -301,7 +269,7 @@ public class CallBackController {
 		return "wx/found"; /** 返回的是显示数据的html的文件名 */
 	}
 
-	@RequestMapping(value = "/ajaxcheckEmailPassWord", method = RequestMethod.POST)
+	@RequestMapping(value = "/ajax_date", method = RequestMethod.POST)
 	@ResponseBody
 	private boolean ajax_date(HttpServletRequest request,
 			HttpServletResponse response) { /** @RequestParam("name")绑定请求地址中的name到参数name中 ModelMap map 存放返回内容 */

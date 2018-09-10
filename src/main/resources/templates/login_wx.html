@@ -2,7 +2,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>登陆</title>
+<title>微服务登陆</title>
 <meta name="viewport" content="initial-scale=1, maximum-scale=1">
 <link rel="shortcut icon" href="/favicon.ico">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,7 +12,6 @@
 <meta http-equiv="expires" content="0">
 <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 <meta http-equiv="description" content="This is my page">
-
 <link rel="stylesheet"
 	href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
 <link rel="stylesheet"
@@ -52,7 +51,7 @@
 										<input type="password" placeholder="请输入密码" id="password"
 											name="password">&nbsp;<a
 											href="javascript:register();">注册</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-											href="forgetPassWord?v=<%=Math.random()%>">找回密码</a>
+											href="javascript:forgetPassWord();">找回密码</a>
 									</div>
 								</div>
 							</div>
@@ -78,7 +77,7 @@
 					<div class="row">
 						<div class="col-50">
 							<a id="loginbtn" href="#"
-								class="button button-big button-fill button-success button-danger">提交</a>
+								class="button button-big button-fill button-success">提交</a>
 						</div>
 					</div>
 				</div>
@@ -116,11 +115,11 @@
 		var inputCode = $("#vcode").val();
 		if (inputCode.length <= 0) {
 			$("#vcode").attr("placeholder", "验证码不能为空");
-			$("#vcode").addClass("warning");
+			$("#vcode").val("");
 			return false;
 		} else if (inputCode.toLowerCase()!= code.toLowerCase()) {
 			$("#vcode").attr("placeholder", "验证码错误");
-			$("#vcode").addClass("warning");
+			$("#vcode").val("");
 			show();//刷新验证码  
 			return false;
 		} 
@@ -138,23 +137,29 @@
 	function register() {
 		window.location.href="register?c="+Math.random();
 	}
+	
+	function forgetPassWord() {
+		window.location.href="forgetPassWord?c="+Math.random();
+	}
 
 	$("#loginbtn").click(
 					function() {
 						var email_ = $("#email").val();
 						var password_ = $("#password").val();
 						if (email.length <= 0) {
-							$("#email").addClass("warning");
+							 $("#email").css("border-style","solid");
+					  		  $("#email").css("border-color","#ff0000");
 							$("#email").attr("placeholder", "请输入email");
 							return false;
 						}
 						if (password.length <= 0) {
-							$("#password").addClass("warning");
+							  $("#password").css("border-style","solid");
+					  		  $("#password").css("border-color","#ff0000");
 							$("#password").attr("placeholder", "密码不能为空");
 							return false;
 						}
 						$.ajax({
-			 			　　　　url : 'ajaxcheckEmailPassWord',　   <!-- url  :请求地址 --> 
+			 			　　　　url : 'ajaxLogIn',　   <!-- url  :请求地址 --> 
 			 			　　　　type : 'post',　　　　　　　　<!--type ：请求类型:post/get --> 
 				 			  xhrFields: {
 				 		           withCredentials: true
@@ -165,11 +170,14 @@
 			 			　　　　　　　　password : password_　　　　　　  <!-- 使用自己声明的对象 -->  
 			 			　　　　　　},
 			 			　　　　dataType : 'json',                    <!--dataType:服务器返回的数据类型 text/xml/script/html/json/jsonp -->
-			 			　　　　success: function(data){　　　<!--回调函数 -->        
-// 			 			　　　　　　console.log(data);         <!--浏览器控制台显示返回内容（建议使用） -->  
-			 			　　　　　　if(data){
-// 			 						已经被注册
-			 			　　　　　　}　　　　　     <!--弹框显示返回内容  -->
+			 			　　　　success: function(data){　　　<!--回调函数 --> 
+			 						if(data){
+							 			$.alert('登陆成功', function () {
+											window.location.href="nav_tabbar?v="+Math.random();
+									      });
+							　　　　　　}　else{
+										$.alert('登陆失败，请检查用户名或者密码');
+							　　　　　　}　
 			 			　　　　　　}
 			 			　　　　});
 					})

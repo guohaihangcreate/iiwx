@@ -2,6 +2,8 @@ package ren.xiangmu.iiwx.entity;
 
 import java.util.Date;
 
+import java.sql.Timestamp;
+
 public class Wx_user {
 
 	public Wx_user() {
@@ -12,9 +14,29 @@ public class Wx_user {
 	
 	private String unid;
 	
+	public String getValidateCode() {
+		return validateCode;
+	}
+
+	public void setValidateCode(String validateCode) {
+		this.validateCode = validateCode;
+	}
+
+	public Timestamp getOutDate() {
+		return outDate;
+	}
+
+	public void setOutDate(Timestamp outDate) {
+		this.outDate = outDate;
+	}
+
 	private String country;
 	
 	private String password;
+	
+	private String validateCode;
+	
+	private Timestamp outDate;
 	
 	private String openid;
 	
