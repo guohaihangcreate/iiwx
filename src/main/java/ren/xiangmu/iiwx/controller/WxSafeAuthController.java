@@ -2,13 +2,13 @@ package ren.xiangmu.iiwx.controller;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import ren.xiangmu.iiwx.util.Md5;
-import ren.xiangmu.iiwx.util.SendMailUtil;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ren.xiangmu.iiwx.entity.Wx_user;
 import ren.xiangmu.iiwx.service.WxUserService;
+import ren.xiangmu.iiwx.util.Md5;
+import ren.xiangmu.iiwx.util.SendMailUtil;
 
 @Controller
 public class WxSafeAuthController {
@@ -128,8 +130,8 @@ public class WxSafeAuthController {
 
 	@RequestMapping(value = "resetpassword", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean resetpassword(String sid, String email,HttpServletRequest request ) {
-		ModelAndView model = new ModelAndView("error");
+	public Map resetpassword(String sid, String email,HttpServletRequest request ) {
+		Map returnMap = new HashMap<String, String>();
 		String msg = "";
 		boolean IsOK = false;
 		Md5 md5 = new Md5();
@@ -149,8 +151,44 @@ public class WxSafeAuthController {
 		}else {
 			msg = "密码修改失败,联系管理员吧。";
 		}
-		model.addObject("msg", msg);
-		return IsOK;
+		returnMap.put("msg", msg);
+		returnMap.put("IsOK", IsOK);
+		return returnMap;
 	}
+	
+	@RequestMapping(value = "modifypassword", method = RequestMethod.POST)
+	@ResponseBody
+	public Map modifypassword(String sid, String email,String passworded,String passowrd_new,HttpServletRequest request ) {
+		Map returnMap = new HashMap<String, String>();
+		String msg = "";
+		boolean IsOK = false;
+		Md5 md5 = new Md5();
+		Map paramap = new HashMap<String, String>();
+		paramap.put("email", email);
+		if(StringUtils.isNotBlank(passworded)) {
+			paramap.put("password", md5.GetMD5Code(passworded));
+		}
+		Wx_user user = null;
+		List<Wx_user> users = wxUserService.pageListByParamMap(paramap);
+		if(users!=null&&users.size()>0) {
+			 user = wxUserService.pageListByParamMap(paramap).get(0);
+		}
+		if (user != null) {
+			user.setPassword(md5.GetMD5Code(passowrd_new));//
+		}else {
+			msg = "邮箱不存在?未知错误,联系管理员吧。";
+		}
+		int i = wxUserService.updateByPrimaryKeyId(user);
+		if(i>0) {
+			IsOK = true;
+			msg = "密码已经修改成功，请用新密码登陆微服务!";
+		}else {
+			msg = "密码修改失败,联系管理员吧。";
+		}
+		returnMap.put("IsOK", IsOK);
+		returnMap.put("msg", msg);
+		return returnMap;
+	}
+
 
 }
