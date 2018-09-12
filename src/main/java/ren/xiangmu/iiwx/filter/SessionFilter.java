@@ -18,7 +18,7 @@ public class SessionFilter implements Filter {
 	String NO_LOGIN = "您还未登录";
 
 	// 不需要登录就可以访问的路径(比如:注册登录等)
-	String[] includeUrls = new String[] { "/login_wx","/ajaxLogIn", "/wxAuthLogIn", "/ajaxRegistered", "/callback","/CodeServlet" };
+	String[] includeUrls = new String[] { "/login_wx","/ajaxLogIn","/resetpassword","/wxAuthLogIn", "/ajaxRegistered", "/callback","/CodeServlet","/checkResetLink" };
 
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)

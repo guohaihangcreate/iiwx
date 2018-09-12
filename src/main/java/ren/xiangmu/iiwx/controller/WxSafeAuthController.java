@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +32,9 @@ public class WxSafeAuthController {
 	public WxSafeAuthController() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	@Autowired
+	private Environment env;
 
 	@Autowired
 	private WxUserService wxUserService;
@@ -76,9 +80,12 @@ public class WxSafeAuthController {
 			String[] cs = { "", "", "" };
 			String[] ms = { "" };
 			String[] fileList = null;
+			String emailsmtp = env.getProperty("emailsmtp");
+			String emailaddress = env.getProperty("emailaddress");
+			String emailpass = env.getProperty("emailpass");
 			// 第一个参数to 收件箱地址，第二个抄送，第三个秘送，第四个邮件抬头，第五个邮件正文，第六个发件箱地址，第七个附list，
-			sendMailUtil.send_(to, cs, ms, emailTitle, emailContent, "weixin@xiangmu.ren", fileList, "smtp.mxhichina.com",
-					"weixin@xiangmu.ren", "AAaa1234");
+			sendMailUtil.send_(to, cs, ms, emailTitle, emailContent, emailaddress, fileList, emailsmtp,
+					emailaddress, emailpass);
 			msg = "操作成功,已经发送找回密码链接到您邮箱。请在30分钟内重置密码";
 			// logInfo(request, email, "申请找回密码");
 		} catch (Exception e) {
@@ -187,6 +194,57 @@ public class WxSafeAuthController {
 		}
 		returnMap.put("IsOK", IsOK);
 		returnMap.put("msg", msg);
+		return returnMap;
+	}
+	
+	@RequestMapping(value = "modifyUserMessage", method = RequestMethod.POST)
+	@ResponseBody
+	public Map modifyUserMessage(HttpServletRequest request ) {
+		Wx_user wx_user = new Wx_user();
+		Map returnMap = new HashMap<String, String>();
+		String msg = "";
+		boolean IsOK = false;
+		Md5 md5 = new Md5();
+		String id = request.getParameter("id");
+		String idno = request.getParameter("idno");
+		String email = request.getParameter("email");
+		String mobile = request.getParameter("mobile");
+		Map paramap = new HashMap<String, String>();
+		if(StringUtils.isNotBlank(id)) {
+			wx_user.setId(Integer.valueOf(id));
+		}
+		if(StringUtils.isNotBlank(idno)) {
+			wx_user.setIdno(idno);
+		}
+		if(StringUtils.isNotBlank(email)) {
+			wx_user.setEmail(email);
+		}
+		if(StringUtils.isNotBlank(mobile)) {
+			wx_user.setMobile(mobile);
+		}
+		int i = wxUserService.updateByPrimaryKeyId(wx_user);
+		if(i>0) {
+			IsOK = true;
+//			更新session中的信息
+			Wx_user wx_user_session = (Wx_user) request.getSession().getAttribute("userinfo");
+			if(wx_user_session!=null) {
+				if(StringUtils.isNotBlank(idno)){
+					wx_user_session.setIdno(idno);
+				}
+				if(StringUtils.isNotBlank(email)){
+					wx_user_session.setEmail(email);
+				}
+				if(StringUtils.isNotBlank(mobile)){
+					wx_user_session.setMobile(mobile);
+				}
+				request.getSession().setAttribute("userinfo", wx_user_session);
+			}
+			msg = "注冊信息更新成功，请用您继续使用!";
+		}else {
+			msg = "注冊信息更新失败,联系管理员吧。";
+		}
+		returnMap.put("msg", msg);
+		returnMap.put("IsOK", IsOK);
 		return returnMap;
 	}
 
