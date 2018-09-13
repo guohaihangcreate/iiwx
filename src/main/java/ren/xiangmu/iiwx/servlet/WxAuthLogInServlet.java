@@ -37,14 +37,14 @@ public class WxAuthLogInServlet extends HttpServlet {
 				.autowireBean(this);
 	}
 
-	@Bean
+	/*@Bean
 	public InternalResourceViewResolver viewResolver() {
 	        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 	        viewResolver.setPrefix("WEB-INF/wx/");
 	        viewResolver.setSuffix(".jsp");
 	        return viewResolver;
 	 }
-
+*/
 	
 	@Autowired
 	private WxUserService wxUserService ;

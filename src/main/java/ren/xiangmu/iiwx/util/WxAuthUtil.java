@@ -61,7 +61,7 @@ public class WxAuthUtil {
 	}
 	
 	/*
-	 * »ñÈ¡postÇëÇó
+	 * è·å–postè¯·æ±‚
 	 */
 	public static JSONObject doPostJSON(String url,String outStr) {
 		DefaultHttpClient httpclent = new DefaultHttpClient();
@@ -72,7 +72,7 @@ public class WxAuthUtil {
 			HttpResponse response = httpclent.execute(httpPost);
 			String result =EntityUtils.toString(response.getEntity(),"utf-8");
 			jsonObject = JSONObject.fromObject(result);
-			httpPost.releaseConnection();//ÊÍ·ÅÁ´½Ó
+			httpPost.releaseConnection();//é‡Šæ”¾é“¾æ¥
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,30 +97,30 @@ public class WxAuthUtil {
 	public static Menue initMenue() {
 		Menue menue = new Menue();
 		ClickButton button11 = new ClickButton();
-		button11.setName("¹ØÓÚ¿ÂÈñÌØ");
+		button11.setName("å…³äºæŸ¯é”ç‰¹");
 		button11.setType("click");
 		button11.setKey("11");
 		
 		ViewButton button21 = new ViewButton();
-		button21.setName("ÎÒÒªÓ¦Æ¸");
+		button21.setName("æˆ‘è¦åº”è˜");
 		button21.setType("view");
 		button21.setUrl("http://www.xiangmu.ren");
 		
 		ViewButton button_login = new ViewButton();
-		button_login.setName("Ô±¹¤µÇÂ½");
+		button_login.setName("å‘˜å·¥ç™»é™†");
 		button_login.setType("view");
 		button_login.setUrl("http://weixin.xiangmu.ren/zpwx/wxAuthLogIn?type=auth");
 //		ViewButton button31 = new ViewButton();
-//		button31.setName("¿¼ÇÚĞÅÏ¢");
+//		button31.setName("è€ƒå‹¤ä¿¡æ¯");
 //		button31.setType("view");
 //		button31.setUrl("http://weixin.xiangmu.ren/zpwx/kaoqin_page.jsp");
 //		
 //		ViewButton button32 = new ViewButton();
-//		button32.setName("Ğ½³ê²éÑ¯");
+//		button32.setName("è–ªé…¬æŸ¥è¯¢");
 //		button32.setType("view");
 //		button32.setUrl("http://weixin.xiangmu.ren/zpwx/gzt_page.jsp");
 //		Button button = new Button();
-//		button.setName("Ô±¹¤²éÑ¯");
+//		button.setName("å‘˜å·¥æŸ¥è¯¢");
 //		button.setSub_button(new Button[] {button_login});
 		menue.setButton(new Button[] {button11,button21,button_login});
 		return menue;

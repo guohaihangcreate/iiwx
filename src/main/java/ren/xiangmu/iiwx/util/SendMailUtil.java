@@ -28,14 +28,14 @@ public class SendMailUtil {
 	@Autowired
 	private Environment env;
 
-	private String host = ""; // smtp·şÎñÆ÷
-	private String from = ""; // ·¢¼şÈËµØÖ·
-	private String to = ""; // ÊÕ¼şÈËµØÖ·
-	private String affix = ""; // ¸½¼şµØÖ·
-	private String affixName = ""; // ¸½¼şÃû³Æs
-	private String user = ""; // ÓÃ»§Ãû
-	private String pwd = ""; // ÃÜÂë
-	private String subject = ""; // ÓÊ¼ş±êÌâ
+	private String host = ""; // smtpæœåŠ¡å™¨
+	private String from = ""; // å‘ä»¶äººåœ°å€
+	private String to = ""; // æ”¶ä»¶äººåœ°å€
+	private String affix = ""; // é™„ä»¶åœ°å€
+	private String affixName = ""; // é™„ä»¶åç§°s
+	private String user = ""; // ç”¨æˆ·å
+	private String pwd = ""; // å¯†ç 
+	private String subject = ""; // é‚®ä»¶æ ‡é¢˜
 
 	private static SendMailUtil instance = null;
 
@@ -50,7 +50,7 @@ public class SendMailUtil {
 		this.affixName = affixName;
 	}
 
-	// Ìí¼Ó¶à¸ö¸½¼ş
+	// æ·»åŠ å¤šä¸ªé™„ä»¶
 	public void addTach(String fileList[], Multipart multipart)
 			throws MessagingException, UnsupportedEncodingException {
 		for (int index = 0; index < fileList.length; index++) {
@@ -93,15 +93,15 @@ public class SendMailUtil {
 
 		// SendMailUtil cn = new SendMailUtil();
 		// String affix =
-		// "D:\\workspace\\create\\WebRoot\\sendedOffer\\¹ùº£º½offer&&14531982775378517.doc";
-		// String affixTitle = "ÕÅÇìÀöoffer.doc";
-		// String emailTitle = "ÏîÄ¿¾­Àí¹ùº£º½µÄ¼òÀú";
+		// "D:\\workspace\\create\\WebRoot\\sendedOffer\\éƒ­æµ·èˆªoffer&&14531982775378517.doc";
+		// String affixTitle = "å¼ åº†ä¸½offer.doc";
+		// String emailTitle = "é¡¹ç›®ç»ç†éƒ­æµ·èˆªçš„ç®€å†";
 		// String receiveEmail = "guohaihang0512@163.com";
 		// String[] arg = new String[2];
 		// arg[0] = "hr@xiangmu.ren";
 		// arg[1] = "AAaa1234";
-		// String text = "ÕÅÇìÀû,\n
-		// ÄãºÃ£¡\nºÜ¸ßĞËÄú±»ÎÒ¹«Ë¾ÏîÄ¿²¿Æ¸ÓÃÎªJava¿ª·¢¹¤³ÌÊ¦Ò»Ö°£¬ÏÖÏòÄú·¢ËÍÂ¼È¡Í¨ÖªÊé£¬ÇëÄú°´offerÉÏÒªÇó×¼±¸ÏàÓ¦ÈëÖ°×ÊÁÏ£¬Ï£ÍûÄúÔÚĞÂµÄ¹«Ë¾ÓĞĞÂµÄÆğµãÓëÊÕ»ñ¡£";
+		// String text = "å¼ åº†åˆ©,\n
+		// ä½ å¥½ï¼\nå¾ˆé«˜å…´æ‚¨è¢«æˆ‘å…¬å¸é¡¹ç›®éƒ¨è˜ç”¨ä¸ºJavaå¼€å‘å·¥ç¨‹å¸ˆä¸€èŒï¼Œç°å‘æ‚¨å‘é€å½•å–é€šçŸ¥ä¹¦ï¼Œè¯·æ‚¨æŒ‰offerä¸Šè¦æ±‚å‡†å¤‡ç›¸åº”å…¥èŒèµ„æ–™ï¼Œå¸Œæœ›æ‚¨åœ¨æ–°çš„å…¬å¸æœ‰æ–°çš„èµ·ç‚¹ä¸æ”¶è·ã€‚";
 		// cn.sendOfferEmail(affix, affixTitle, emailTitle, receiveEmail, arg,
 		// text);
 
@@ -109,13 +109,13 @@ public class SendMailUtil {
 		// String to[] = { "guohaihang0512@163.com" };
 		// String cs[] = {"1182112519@qq.com"};
 		// String ms[] = {"407564206@qq.com"};;
-		// String subject = "²âÊÔÒ»ÏÂ";
-		// String content = "ÕâÊÇÓÊ¼şÄÚÈİ£¬½ö½öÊÇ²âÊÔ£¬²»ĞèÒª»Ø¸´";
+		// String subject = "æµ‹è¯•ä¸€ä¸‹";
+		// String content = "è¿™æ˜¯é‚®ä»¶å†…å®¹ï¼Œä»…ä»…æ˜¯æµ‹è¯•ï¼Œä¸éœ€è¦å›å¤";
 		// String formEmail = "hr@xiangmu.ren";
 		// String[] arrArchievList = new String[2];
-		// arrArchievList[0] = "D:\\¹ùº£º½.doc";
-		// arrArchievList[1] = "D:\\¹ùº£º½.html";
-		// // 2.±£´æ¶à¸ö¸½¼ş
+		// arrArchievList[0] = "D:\\éƒ­æµ·èˆª.doc";
+		// arrArchievList[1] = "D:\\éƒ­æµ·èˆª.html";
+		// // 2.ä¿å­˜å¤šä¸ªé™„ä»¶
 		// send.send_(to, cs, ms, subject, content, formEmail,
 		// arrArchievList,"smtp.mxhichina.com","hr@xiangmu.ren", "AAaa1234");
 
@@ -133,58 +133,58 @@ public class SendMailUtil {
 		p.put("mail.transport.protocol", "smtp");
 		p.put("mail.smtp.host", host);
 		p.put("mail.smtp.port", "25");
-		// ½¨Á¢»á»°
+		// å»ºç«‹ä¼šè¯
 		Session session = Session.getInstance(p);
-		Message msg = new MimeMessage(session); // ½¨Á¢ĞÅÏ¢
+		Message msg = new MimeMessage(session); // å»ºç«‹ä¿¡æ¯
 		BodyPart messageBodyPart = new MimeBodyPart();
 		Multipart multipart = new MimeMultipart();
-		msg.setFrom(new InternetAddress(formEmail)); // ·¢¼şÈË
+		msg.setFrom(new InternetAddress(formEmail)); // å‘ä»¶äºº
 
 		String toList = null;
 		String toListcs = null;
 		String toListms = null;
 
-		// ·¢ËÍ,
+		// å‘é€,
 		if (to != null) {
 			toList = getMailList(to);
 			InternetAddress[] iaToList = new InternetAddress()
 					.parse(toList);
-			msg.setRecipients(Message.RecipientType.TO, iaToList); // ÊÕ¼şÈË
+			msg.setRecipients(Message.RecipientType.TO, iaToList); // æ”¶ä»¶äºº
 		}
 
-		// ³­ËÍ
+		// æŠ„é€
 		if (cs != null) {
 			toListcs = getMailList(cs);
 			InternetAddress[] iaToListcs = new InternetAddress()
 					.parse(toListcs);
-			msg.setRecipients(Message.RecipientType.CC, iaToListcs); // ³­ËÍÈË
+			msg.setRecipients(Message.RecipientType.CC, iaToListcs); // æŠ„é€äºº
 		}
 
-		// ÃÜËÍ
+		// å¯†é€
 		if (ms != null) {
 			toListms = getMailList(ms);
 			InternetAddress[] iaToListms = new InternetAddress()
 					.parse(toListms);
-			msg.setRecipients(Message.RecipientType.BCC, iaToListms); // ÃÜËÍÈË
+			msg.setRecipients(Message.RecipientType.BCC, iaToListms); // å¯†é€äºº
 		}
-		msg.setSentDate(new Date()); // ·¢ËÍÈÕÆÚ
-		msg.setSubject(subject); // Ö÷Ìâ
-		msg.setText(content); // ÄÚÈİ
-		// ÏÔÊ¾ÒÔhtml¸ñÊ½µÄÎÄ±¾ÄÚÈİ
+		msg.setSentDate(new Date()); // å‘é€æ—¥æœŸ
+		msg.setSubject(subject); // ä¸»é¢˜
+		msg.setText(content); // å†…å®¹
+		// æ˜¾ç¤ºä»¥htmlæ ¼å¼çš„æ–‡æœ¬å†…å®¹
 		messageBodyPart.setContent(content, "text/html;charset=gbk");
 		multipart.addBodyPart(messageBodyPart);
 
-		// 2.±£´æ¶à¸ö¸½¼ş
+		// 2.ä¿å­˜å¤šä¸ªé™„ä»¶
 		if (fileList != null) {
 			addTach(fileList, multipart);
 		}
 
 		msg.setContent(multipart);
-		// ÓÊ¼ş·şÎñÆ÷½øĞĞÑéÖ¤
+		// é‚®ä»¶æœåŠ¡å™¨è¿›è¡ŒéªŒè¯
 		Transport tran = session.getTransport("smtp");
 		tran.connect(host, user, pwd);
-		tran.sendMessage(msg, msg.getAllRecipients()); // ·¢ËÍ
-		System.out.println("ÓÊ¼ş·¢ËÍ³É¹¦");
+		tran.sendMessage(msg, msg.getAllRecipients()); // å‘é€
+		System.out.println("é‚®ä»¶å‘é€æˆåŠŸ");
 
 	}
 
@@ -194,60 +194,60 @@ public class SendMailUtil {
 		this.pwd = pwd;
 
 		Properties props = new Properties();
-		// ĞèÒª¾­¹ıÊÚÈ¨£¬Ò²¾ÍÊÇÓĞ»§ÃûºÍÃÜÂëµÄĞ£Ñé£¬ÕâÑù²ÅÄÜÍ¨¹ıÑéÖ¤£¨Ò»¶¨ÒªÓĞÕâÒ»Ìõ£©
+		// éœ€è¦ç»è¿‡æˆæƒï¼Œä¹Ÿå°±æ˜¯æœ‰æˆ·åå’Œå¯†ç çš„æ ¡éªŒï¼Œè¿™æ ·æ‰èƒ½é€šè¿‡éªŒè¯ï¼ˆä¸€å®šè¦æœ‰è¿™ä¸€æ¡ï¼‰
 		props.put("mail.smtp.auth", "true");
-		// ÉèÖÃ·¢ËÍÓÊ¼şµÄÓÊ¼ş·şÎñÆ÷µÄÊôĞÔ£¨ÕâÀïÊ¹ÓÃÍøÒ×µÄsmtp·şÎñÆ÷£©
+		// è®¾ç½®å‘é€é‚®ä»¶çš„é‚®ä»¶æœåŠ¡å™¨çš„å±æ€§ï¼ˆè¿™é‡Œä½¿ç”¨ç½‘æ˜“çš„smtpæœåŠ¡å™¨ï¼‰
 		props.put("mail.transport.protocol", "smtp");
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.port", "25");
-		// ÓÃ¸Õ¸ÕÉèÖÃºÃµÄprops¶ÔÏó¹¹½¨Ò»¸ösession
+		// ç”¨åˆšåˆšè®¾ç½®å¥½çš„propså¯¹è±¡æ„å»ºä¸€ä¸ªsession
 		Session session = Session.getDefaultInstance(props);
-		// ÓĞÁËÕâ¾ä±ã¿ÉÒÔÔÚ·¢ËÍÓÊ¼şµÄ¹ı³ÌÖĞÔÚconsole´¦ÏÔÊ¾¹ı³ÌĞÅÏ¢£¬¹©µ÷ÊÔÊ¹
-		// ÓÃ£¨Äã¿ÉÒÔÔÚ¿ØÖÆÌ¨£¨console)ÉÏ¿´µ½·¢ËÍÓÊ¼şµÄ¹ı³Ì£©
+		// æœ‰äº†è¿™å¥ä¾¿å¯ä»¥åœ¨å‘é€é‚®ä»¶çš„è¿‡ç¨‹ä¸­åœ¨consoleå¤„æ˜¾ç¤ºè¿‡ç¨‹ä¿¡æ¯ï¼Œä¾›è°ƒè¯•ä½¿
+		// ç”¨ï¼ˆä½ å¯ä»¥åœ¨æ§åˆ¶å°ï¼ˆconsole)ä¸Šçœ‹åˆ°å‘é€é‚®ä»¶çš„è¿‡ç¨‹ï¼‰
 		session.setDebug(true);
 
-		// ÓÃsessionÎª²ÎÊı¶¨ÒåÏûÏ¢¶ÔÏó
+		// ç”¨sessionä¸ºå‚æ•°å®šä¹‰æ¶ˆæ¯å¯¹è±¡
 		MimeMessage message = new MimeMessage(session);
 		try {
-			// ¼ÓÔØ·¢¼şÈËµØÖ·
+			// åŠ è½½å‘ä»¶äººåœ°å€
 			message.setFrom(new InternetAddress(from));
 
 			// message.setRecipient(Message.RecipientType.CC, iaToListcs);
 
-			// ¼ÓÔØÊÕ¼şÈËµØÖ·
+			// åŠ è½½æ”¶ä»¶äººåœ°å€
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
 					to));
-			// ¼ÓÔØ±êÌâ
+			// åŠ è½½æ ‡é¢˜
 			message.setSubject(subject);
 
-			// Ïòmultipart¶ÔÏóÖĞÌí¼ÓÓÊ¼şµÄ¸÷¸ö²¿·ÖÄÚÈİ£¬°üÀ¨ÎÄ±¾ÄÚÈİºÍ¸½¼ş
+			// å‘multipartå¯¹è±¡ä¸­æ·»åŠ é‚®ä»¶çš„å„ä¸ªéƒ¨åˆ†å†…å®¹ï¼ŒåŒ…æ‹¬æ–‡æœ¬å†…å®¹å’Œé™„ä»¶
 			Multipart multipart = new MimeMultipart();
 
-			// ÉèÖÃÓÊ¼şµÄÎÄ±¾ÄÚÈİ
+			// è®¾ç½®é‚®ä»¶çš„æ–‡æœ¬å†…å®¹
 			BodyPart contentPart = new MimeBodyPart();
 			contentPart.setText(text);
 			multipart.addBodyPart(contentPart);
-			// Ìí¼Ó¸½¼ş
+			// æ·»åŠ é™„ä»¶
 			BodyPart messageBodyPart = new MimeBodyPart();
 			DataSource source = new FileDataSource(affix);
-			// Ìí¼Ó¸½¼şµÄÄÚÈİ
+			// æ·»åŠ é™„ä»¶çš„å†…å®¹
 			messageBodyPart.setDataHandler(new DataHandler(source));
-			// Ìí¼Ó¸½¼şµÄ±êÌâ
-			// ÕâÀïºÜÖØÒª£¬Í¨¹ıÏÂÃæµÄBase64±àÂëµÄ×ª»»¿ÉÒÔ±£Ö¤ÄãµÄÖĞÎÄ¸½¼ş±êÌâÃûÔÚ·¢ËÍÊ±²»»á±ä³ÉÂÒÂë
+			// æ·»åŠ é™„ä»¶çš„æ ‡é¢˜
+			// è¿™é‡Œå¾ˆé‡è¦ï¼Œé€šè¿‡ä¸‹é¢çš„Base64ç¼–ç çš„è½¬æ¢å¯ä»¥ä¿è¯ä½ çš„ä¸­æ–‡é™„ä»¶æ ‡é¢˜ååœ¨å‘é€æ—¶ä¸ä¼šå˜æˆä¹±ç 
 			sun.misc.BASE64Encoder enc = new sun.misc.BASE64Encoder();
 			messageBodyPart.setFileName("=?GBK?B?"
 					+ enc.encode(affixName.getBytes()) + "?=");
 			multipart.addBodyPart(messageBodyPart);
 
-			// ½«multipart¶ÔÏó·Åµ½messageÖĞ
+			// å°†multipartå¯¹è±¡æ”¾åˆ°messageä¸­
 			message.setContent(multipart);
-			// ±£´æÓÊ¼ş
+			// ä¿å­˜é‚®ä»¶
 			message.saveChanges();
-			// ·¢ËÍÓÊ¼ş
+			// å‘é€é‚®ä»¶
 			Transport transport = session.getTransport("smtp");
-			// Á¬½Ó·şÎñÆ÷µÄÓÊÏä
+			// è¿æ¥æœåŠ¡å™¨çš„é‚®ç®±
 			transport.connect(host, user, pwd);
-			// °ÑÓÊ¼ş·¢ËÍ³öÈ¥
+			// æŠŠé‚®ä»¶å‘é€å‡ºå»
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
 		} catch (Exception e) {
@@ -256,16 +256,16 @@ public class SendMailUtil {
 	}
 
 	/*
-	 * affix¸½¼şÎ»ÖÃ£¬affixTitle¸½¼ş±êÌâ£¬emailTitleÓÊ¼ş±êÌâ args[0]·¢¼şÕË»§£¬args[1]·¢¼şÃÜÂë
-	 * receiveEmailÊÕ¼şµØÖ· text ÓÊ¼şÕıÎÄ
+	 * affixé™„ä»¶ä½ç½®ï¼ŒaffixTitleé™„ä»¶æ ‡é¢˜ï¼ŒemailTitleé‚®ä»¶æ ‡é¢˜ args[0]å‘ä»¶è´¦æˆ·ï¼Œargs[1]å‘ä»¶å¯†ç 
+	 * receiveEmailæ”¶ä»¶åœ°å€ text é‚®ä»¶æ­£æ–‡
 	 */
 	public void sendOfferEmail(String affix, String affixTitle,
 			String emailTitle, String receiveEmail, String args[], String text) {
-		// smtp·şÎñÆ÷
+		// smtpæœåŠ¡å™¨
 		String emailsmtp = env.getProperty("emailsmtp");
-		// ·¢¼şÓÊ¼şÕË»§
+		// å‘ä»¶é‚®ä»¶è´¦æˆ·
 		String emailaddress = "";
-		// ·¢¼şÕË»§ÃÜÂë
+		// å‘ä»¶è´¦æˆ·å¯†ç 
 		String emailpass = "";
 
 		if (args != null && args.length > 0) {
@@ -280,11 +280,11 @@ public class SendMailUtil {
 		}
 
 		SendMailUtil cn = new SendMailUtil();
-		// ÉèÖÃ·¢¼şÈËµØÖ·¡¢ÊÕ¼şÈËµØÖ·ºÍÓÊ¼ş±êÌâ
+		// è®¾ç½®å‘ä»¶äººåœ°å€ã€æ”¶ä»¶äººåœ°å€å’Œé‚®ä»¶æ ‡é¢˜
 		cn.setAddress(emailaddress, receiveEmail, emailTitle);
-		// ÉèÖÃÒª·¢ËÍ¸½¼şµÄÎ»ÖÃºÍ±êÌâ
+		// è®¾ç½®è¦å‘é€é™„ä»¶çš„ä½ç½®å’Œæ ‡é¢˜
 		cn.setAffix(affix, affixTitle);
-		// ÉèÖÃsmtp·şÎñÆ÷ÒÔ¼°ÓÊÏäµÄÕÊºÅºÍÃÜÂë
+		// è®¾ç½®smtpæœåŠ¡å™¨ä»¥åŠé‚®ç®±çš„å¸å·å’Œå¯†ç 
 		// cn.send("smtp.mxhichina.com", "hr@xiangmu.ren", "AAaa1234");
 		cn.send(emailsmtp, emailaddress, emailpass, text);
 	}
