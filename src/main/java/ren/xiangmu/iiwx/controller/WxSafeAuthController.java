@@ -44,10 +44,14 @@ public class WxSafeAuthController {
 	public Map forgetPass(HttpServletRequest request, String email) {
 		Map paramap = new HashMap<String, String>();
 		paramap.put("email", email);
-		Wx_user users = wxUserService.pageListByParamMap(paramap).get(0);
+		List<Wx_user> listUser = wxUserService.pageListByParamMap(paramap);
 		Map map = new HashMap<String, String>();
 		String msg = "";
-		if (users == null) { // 用户名不存在
+		Wx_user users = null;
+		if(listUser!=null&&listUser.size()>0) {
+			 users = listUser.get(0);
+		}
+		else  { // 用户名不存在
 			msg = "用户名不存在,你不会忘记用户名了吧?";
 			map.put("msg", msg);
 			return map;
