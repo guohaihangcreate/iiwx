@@ -96,20 +96,20 @@ public class WxAuthUtil {
 	
 	public static Menue initMenue() {
 		Menue menue = new Menue();
-		ClickButton button11 = new ClickButton();
+		ViewButton button11 = new ViewButton();
 		button11.setName("关于柯锐特");
-		button11.setType("click");
-		button11.setKey("11");
+		button11.setType("view");
+		button11.setUrl("http://www.xiangmu.ren");
 		
-		ViewButton button21 = new ViewButton();
+		ClickButton button21 = new ClickButton();
 		button21.setName("我要应聘");
-		button21.setType("view");
-		button21.setUrl("http://www.xiangmu.ren");
+		button21.setType("click");
+		button21.setKey("11");
 		
 		ViewButton button_login = new ViewButton();
 		button_login.setName("员工登陆");
 		button_login.setType("view");
-		button_login.setUrl("http://weixin.xiangmu.ren/zpwx/wxAuthLogIn?type=auth");
+		button_login.setUrl("http://weixin.xiangmu.ren/iiwx/wxAuthLogIn?type=auth");
 //		ViewButton button31 = new ViewButton();
 //		button31.setName("考勤信息");
 //		button31.setType("view");
