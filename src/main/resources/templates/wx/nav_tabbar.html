@@ -8,16 +8,13 @@
 <meta http-equiv="Expires" content="0" />
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="stylesheet"
-	href="css/weui.css" />
-<link rel="stylesheet"
-	href="css/example.css" />
+<link rel="stylesheet" href="css/weui.css" />
+<link rel="stylesheet" href="css/example.css" />
 </head>
 <body>
 	<div class="weui-flex" style="height: 31rem;">
 		<div class="weui-flex__item" id="main_page">
-			<div class="placeholder" style=""
-				></div>
+			<div class="placeholder" style=""></div>
 		</div>
 	</div>
 	<div class="weui-flex" style="height: 1rem;">
@@ -27,32 +24,28 @@
 					<div class="weui-tab">
 						<div class="weui-tab__panel"></div>
 						<div class="weui-tabbar">
-							<a href="##" id="default"
-								url="/wx_main"
+							<a href="##" id="default" url="/wx_main"
 								class="weui-tabbar__item weui-bar__item_on"> <span
 								style="display: inline-block; position: relative;"> <img
-									src="images/icon_tabbar.png"
-									alt="" class="weui-tabbar__icon"> <span
-									class="weui-badge" 
+									src="images/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+									<span class="weui-badge"
 									style="position: absolute; top: -2px; right: -13px;"></span>
 							</span>
 								<p class="weui-tabbar__label">微信</p>
-							</a> <a url="/waiting.html"
-								href="##" class="weui-tabbar__item"> <img
-								src="images/icon_tabbar.png"
-								alt="" class="weui-tabbar__icon">
+							</a> <a url="/waiting.html" href="##" class="weui-tabbar__item">
+								<img src="images/icon_tabbar.png" alt=""
+								class="weui-tabbar__icon">
 								<p class="weui-tabbar__label">通讯录</p>
-							</a> <a href="##" url="/waiting.html" class="weui-tabbar__item"> <span
-								style="display: inline-block; position: relative;"> <img
-									src="images/icon_tabbar.png"
-									alt="" class="weui-tabbar__icon"> <span
+							</a> <a href="##" url="/waiting.html" class="weui-tabbar__item">
+								<span style="display: inline-block; position: relative;">
+									<img src="images/icon_tabbar.png" alt=""
+									class="weui-tabbar__icon"> <span
 									class="weui-badge weui-badge_dot"
 									style="position: absolute; top: 0; right: -6px;"></span>
 							</span>
 								<p class="weui-tabbar__label">发现</p>
 							</a> <a href="##" url="/myinfo" class="weui-tabbar__item"> <img
-								src="images/icon_tabbar.png"
-								alt="" class="weui-tabbar__icon">
+								src="images/icon_tabbar.png" alt="" class="weui-tabbar__icon">
 								<p class="weui-tabbar__label">我</p>
 							</a>
 						</div>
@@ -63,13 +56,12 @@
 	</div>
 
 </body>
-<script type="text/javascript"
-	src="js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="js/jweixin-1.0.0.js"></script>
 <script src="js/zepto.min.js"></script>
 <script src="js/example.js"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
-		var url_= $("#default").attr("url");
+	$(document).ready(function() {
+		var url_ = $("#default").attr("url");
 		htmlobj = $.ajax({
 			url : url_,
 			async : false
@@ -80,7 +72,7 @@
 		$('.weui-tabbar__item').on(
 				'click',
 				function() {
-					var url_=$(this).attr("url");
+					var url_ = $(this).attr("url");
 					$(this).addClass('weui-bar__item_on').siblings(
 							'.weui-bar__item_on').removeClass(
 							'weui-bar__item_on');
